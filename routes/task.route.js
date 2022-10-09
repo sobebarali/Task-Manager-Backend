@@ -11,7 +11,7 @@ const taskRouter = express.Router()
 
 taskRouter.route('/').get(getAllTask).post(createTask)
 taskRouter.route('/:id').get(getTask).patch(updateTask).delete(deleteTask)
-taskRouter.route('/:name').get(findTaskByName)
-taskRouter.route('/:query').get(findTask)
+taskRouter.route('/name/:name').get(findTaskByName)
+taskRouter.route('/query/:query').get(findTask)
 
 module.exports = taskRouter

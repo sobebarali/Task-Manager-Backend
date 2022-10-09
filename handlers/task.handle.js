@@ -5,8 +5,10 @@ const task = new Task();
 async function createTask(req, res) {
   const info = req.body;
   try {
-    const addedTask = await task.addTask(info);
-    res.status(201).send(addedTask);
+    await task.addTask(info);
+    return res.status(201).send({
+      message: "Task added successfully",
+    });
   } catch (error) {
     res.status(400).send({
       error: error.message,
@@ -17,7 +19,7 @@ async function createTask(req, res) {
 async function getAllTask(req, res) {
   try {
     const tasks = await task.getAll();
-    res.status(200).send(tasks);
+    res.status(200).json({ tasks });
   } catch (error) {
     res.status(400).send({
       error: error.message,
@@ -60,14 +62,18 @@ async function deleteTask(req, res) {
 
 async function getTask(req, res) {
   const id = req.params.id;
+  try {
+    const info = await task.getTaskById(id);
 
-  const info = await task.getTaskById(id);
-
-  if (info) {
+    if (info == null) {
+      return res.status(404).send({
+        error: "Task does not exist.",
+      });
+    }
     res.status(200).send(info);
-  } else {
-    return res.status(404).send({
-      error: "Task does not exist.",
+  } catch (error) {
+    res.status(500).send({
+      error: error.message,
     });
   }
 }
@@ -75,7 +81,7 @@ async function getTask(req, res) {
 async function findTask(req, res) {
   const query = req.params.query;
   try {
-    const info = await blog.searchTask(query);
+    const info = await task.searchTask(query);
     res.status(200).send(info);
   } catch (error) {
     res.status(500).send({
