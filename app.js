@@ -1,5 +1,6 @@
 const express = require("express");
 const connectDatabase = require("./database/connectDatabase");
+const taskRouter = require("./routes/task.route");
 
 require("dotenv").config();
 
@@ -9,6 +10,11 @@ const app = express();
 app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 
+// routes
+app.use(taskRouter)
+
+
+//Starting the App 
 const startAPP = async () => {
   try {
     await connectDatabase();
