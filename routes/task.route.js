@@ -9,9 +9,9 @@ const {getAllTask,
 
 const taskRouter = express.Router()
 
-taskRouter.route('/').get(getAllTask).post(createTask)
-taskRouter.route('/:id').get(getTask).patch(updateTask).delete(deleteTask)
-taskRouter.route('/name/:name').get(findTaskByName)
-taskRouter.route('/query/:query').get(findTask)
+taskRouter.route('/tasks').get(getAllTask).post(createTask)
+taskRouter.route('/tasks/:id').get(getTask).patch(updateTask).delete(deleteTask)
+taskRouter.route('/tasks/name/:name').get(findTaskByName)
+taskRouter.route('/tasks/query/:query').get(findTask)
 
 module.exports = taskRouter
